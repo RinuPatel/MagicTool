@@ -319,7 +319,9 @@ code {
 }
 
 /* home page */
-
+.hero-section .text-heading{ 
+  font-size: larger;
+}
 .main-hero-section {
   margin: 2rem;
 }
@@ -342,9 +344,56 @@ code {
   margin: .2rem;
   border: 1px solid rgb(212, 206, 206);
   border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.main-hero-section .home-tool .tool-item:hover{
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .main-hero-section .home-tool .tool-item .tool-item-link {
   margin: 2rem;
   text-align: left;
+}
+
+/* Common section  */
+
+.common-section{
+  justify-content: center;
+  align-items: center;
+}
+.common-section .common-heading-section{
+  font-size: larger;
+
+}
+
+/* feature */
+.container-full{
+  margin: 2rem;
+}
+.main-content{
+  
+  padding: 2rem;
+  
+  /* align-items: center; */
+  background-color: #3e8da8;
+}
+.main-content .future-content{
+  margin: 0.3rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.main-content .feture-key{
+  width: 20rem;
+  /* border: 1px solid rgb(194, 178, 178); */
+  margin: 1rem;
+  padding: 10px;
+  /* height: 8rem; */
+  background-color: #fff;
+}
+.main-content .feture-key img{
+  margin-top: 1rem;
+  width: 70px;
 }
