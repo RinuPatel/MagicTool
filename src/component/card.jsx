@@ -1,9 +1,15 @@
 import React, { forwardRef } from "react";
 import Tooltip from "./Tooltip";
 import { useState } from "react";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+
 
 const Card = ({ image, index, setActiveCard, onDrop, handleDeleteImage }) => {
+  const id = image._id;
   const [rotation, setRotation] = useState(0);
+  const { attributes, listeners, setNodeRef, transform, transition,active } = useSortable({ id:id });
+
   const rotateImage = () => {
     setRotation((prevRotation) => prevRotation + 90);
   };
@@ -12,19 +18,22 @@ const Card = ({ image, index, setActiveCard, onDrop, handleDeleteImage }) => {
     handleDeleteImage(image._id);
   };
 
+  const style = {
+    transition,
+    transform: CSS.Transform.toString(transform),
+    cursor:active ? "grabbing":"grab"
+  };
   return (
     <article
       className="file image-pdf"
-      // draggable
-      // onDragStart={()=>setActiveCard(index)}
-      // onDragEnd={()=>setActiveCard(null)}
-      // ref={provided.innerRef}
-      // {...provided.draggableProps}
-      // {...provided.dragHandleProps}
+      ref={setNodeRef}
+      {...attributes}
+      {...listeners}
+      style={style}
     >
       <div
         className="file-upload-section"
-        style={{ transform: `rotate(${rotation}deg)` }}
+        style={{ transform: `rotate(${rotation}deg)`,touchAction:"none" }}
       >
         <img
           src={image.url}

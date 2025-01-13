@@ -108,6 +108,7 @@ code {
   background-color: #9acddf;
   border-radius: 15px;
   cursor: pointer;
+  position: relative;
 }
 
 .main-section .upload-btn:hover {
@@ -119,20 +120,18 @@ code {
   margin: 12px;
   display: flex;
   justify-content: center;
-  flex-direction: row;
-  flex-wrap: wrap;
+  /* flex-direction: row;
+  flex-wrap: wrap; */
 }
 
-.main-section .tool-workarea-render {
-  justify-content: center;
-  padding-top: 8px;
+/* .main-section .tool-workarea-render {
   display: flex;
-  flex-wrap: wrap;
-}
+  flex-direction: row;
+} */
+
 
 .file {
   top: 5px;
-  /* margin: 7px; */
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -143,11 +142,9 @@ code {
 
 .file img {
   max-width: 100%;
-  /* Ensure image fits within the container */
   max-height: 100%;
-  /* Ensure image fits within the container */
   object-fit: contain;
-  /* Preserve aspect ratio */
+
 }
 
 .file .image-pdf:hover {
