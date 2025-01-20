@@ -114,15 +114,15 @@ const ImageToPdf = () => {
           sensors={sensors}
           onDragEnd={handleDragEnd}
         >
-          <div className="">
+          <div className="file-drag-Area">
           <SortableContext
             items={images.map((image) => image._id.toString())}
             strategy={horizontalListSortingStrategy}
           >
             {images && images.length > 0
               ? images.map((image, index) => (
-                  <div className="file" key={image._id}>
-                    <div className="tool-workarea-render">
+                <div className="item-drop" key={image._id}>
+                    <div className="">
                       <Card
                         image={image}
                         setActiveCard={setActiveCard}
