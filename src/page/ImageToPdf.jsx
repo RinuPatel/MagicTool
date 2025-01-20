@@ -36,7 +36,8 @@ const ImageToPdf = () => {
       name: file.name,
       url: URL.createObjectURL(file),
     }));
-    setImages(imageUrls);
+    setImages((prevImages)=>[...prevImages,...imageUrls]);
+    console.log("select image here===>", imageUrls);
   };
 
   const getPosition = (id) => images.findIndex((image) => image._id == id);
@@ -46,9 +47,7 @@ const ImageToPdf = () => {
     setImages(updatedImages);
   };
 
- 
   const handleDragEnd = (event) => {
-    console.log(event);
     const { active, over } = event;
     console.log("action id", active, over);
     if (active.id === over.id) return;
@@ -57,6 +56,7 @@ const ImageToPdf = () => {
       const LatestPosition = getPosition(over.id);
       return arrayMove(images, originalPosition, LatestPosition);
     });
+    console.log("images updated", images);
   };
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -90,15 +90,60 @@ const ImageToPdf = () => {
         Convert JPG images to PDF in seconds. Easily adjust orientation and
         margins.
       </p>
-      <div className="main-section">
-        {!isUpload && (
-          <div className="uploader">
+      <div className="pdf-section">
+        <div className="main-section">
+          {!isUpload && (
+            <div className="uploader">
+              <button
+                type="button"
+                className="upload-btn"
+                onClick={handleFileUpload}
+              >
+                Select JPG Images
+              </button>
+              <input
+                type="file"
+                style={{ display: "none" }}
+                ref={fileInputRef}
+                onChange={handleFileChange}
+                multiple
+              />
+            </div>
+          )}
+          <DndContext
+            collisionDetection={closestCorners}
+            sensors={sensors}
+            onDragEnd={handleDragEnd}
+          >
+            <div className="file-drag-Area">
+              <SortableContext
+                items={images.map((image) => image._id.toString())}
+                strategy={horizontalListSortingStrategy}
+              >
+                {images && images.length > 0
+                  ? images.map((image, index) => (
+                      <div className="item-drop" key={image._id}>
+                        <div className="">
+                          <Card
+                            image={image}
+                            setActiveCard={setActiveCard}
+                            handleDeleteImage={handleDeleteImage}
+                          />
+                        </div>
+                      </div>
+                    ))
+                  : ""}
+              </SortableContext>
+            </div>
+          </DndContext>
+        </div>
+        {isUpload && (
+          <div className="add-more-section">
             <button
-              type="button"
-              className="upload-btn"
-              onClick={handleFileUpload}
+              className="add-btn cursor-pointer"
+              onClick={() => fileInputRef.current.click()}
             >
-              Select JPG Images
+              +
             </button>
             <input
               type="file"
@@ -109,34 +154,7 @@ const ImageToPdf = () => {
             />
           </div>
         )}
-        <DndContext
-          collisionDetection={closestCorners}
-          sensors={sensors}
-          onDragEnd={handleDragEnd}
-        >
-          <div className="file-drag-Area">
-          <SortableContext
-            items={images.map((image) => image._id.toString())}
-            strategy={horizontalListSortingStrategy}
-          >
-            {images && images.length > 0
-              ? images.map((image, index) => (
-                <div className="item-drop" key={image._id}>
-                    <div className="">
-                      <Card
-                        image={image}
-                        setActiveCard={setActiveCard}
-                        handleDeleteImage={handleDeleteImage}
-                      />
-                    </div>
-                  </div>
-                ))
-              : ""}
-          </SortableContext>
-          </div>
-        </DndContext>
       </div>
-
       {isUpload && (
         <div>
           <button className="btn btn-convert">Convert Here</button>
